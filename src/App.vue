@@ -1,10 +1,10 @@
 <template>
      <v-container >
-          <p v-if="result.pending">Загрузка...</p>
+          <p v-if="stateStore.pending">Загрузка...</p>
 
-          <question  v-else-if="!result.pending && !result.finished" :question="result.currentQuestion"
-               :questionNumber="result.questionIndex + 1" @answer="answerQuestion" :key="result.questionIndex" />
-          <result  v-else-if="result.finished" :questions="result.questions" :answers="result.answers" />
+          <question  v-else-if="!stateStore.pending && !stateStore.finished" :question="stateStore.currentQuestion"
+               :questionNumber="stateStore.questionIndex + 1" @answer="answerQuestion" :key="stateStore.questionIndex" />
+          <result  v-else-if="stateStore.finished" :questions="stateStore.questions" :answers="stateStore.answers" />
      </v-container>
 </template>
 
