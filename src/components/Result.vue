@@ -1,15 +1,25 @@
 <template>
-    <div class="result">Вы ответили правильно  на {{ correctNumber }} вопроса  </div>
+    <v-sheet :class="correctNumber! >= 19 ? 'bg-green-lighten-3' : 'bg-red-lighten-3'">
+        <div>Вы ответили правильно на {{ correctNumber }} {{ correctNumber == 1 ? 'вопрос' : 'вопроса' }} </div>
 
-    <div v-for="q,qi in questions">
-        <div :class="[
-            'question',
-            q.correctAnswerIndex == props.answers?.[qi]?'correct-answer':'incorrect-answer' 
-            ]" >{{ q.text }}</div>
-        <div class="answer" v-for="a,ai in q.answers">
-            <div :class="[ai==answers?.[qi]?'selected':'',a.isCorrect?'correct':'' ]" >{{ a.text }}</div>
-        </div>
-    </div>
+        <div v-if="correctNumber! >= 19"> Вы сдали тест </div>
+        <div v-if="correctNumber! < 19"> Вы не сдали тест </div>
+    </v-sheet>
+    <v-row v-for="q, qi in questions" class="ma-5">
+        <v-card class="w-100">
+            <v-card-title
+                :class="q.correctAnswerIndex == props.answers?.[qi] ? 'bg-green-lighten-3' : 'bg-red-lighten-3'">{{
+                    q.text
+                }}
+            </v-card-title>
+            <v-sheet v-for="a, ai in q.answers" class="ma-2"
+                :border="ai == answers?.[qi] ? 'error red-lighten-3 xl' : ''">
+                <v-card-text :class="a.isCorrect ? 'bg-green-lighten-3' : ''">
+                    <div>{{ a.text }}</div>
+                </v-card-text>
+            </v-sheet>
+        </v-card>
+    </v-row>
 </template>
 
 <script setup lang="ts">
@@ -20,45 +30,38 @@ const props = defineProps({
     answers: Array<Number>,
 })
 const correctNumber = computed(
-    ()=>props.questions?.filter(
-        (q:any,qi)=>q.correctAnswerIndex == props.answers?.[qi]
-        ).length)
+    () => props.questions?.filter(
+        (q: any, qi) => q.correctAnswerIndex == props.answers?.[qi]
+    ).length)
 </script>
 
- 
- 
+
+
 <style scoped>
-.question
-{
-    margin: 5mm;
-}    
-.correct-answer
-{
+.correct {
     background-color: aquamarine;
-}    
-.incorrect-answer
-{
+}
+
+.incorrect {
     background-color: coral;
 }
 
-.answer
-{
-    margin-left:5mm ;
+.answer {
+    margin-left: 5mm;
 }
-.answer>div
-{
+
+.answer>div {
     padding: 2px;
     margin-left: 5mm;
 }
-.correct
-{
-    background-color:  aquamarine;
-   
+
+.correct {
+    background-color: aquamarine;
+
 }
-.selected
-{
+
+.selected {
     border-color: coral;
     border-style: solid;
 }
-
 </style>
