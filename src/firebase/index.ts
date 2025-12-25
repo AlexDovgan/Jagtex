@@ -1,6 +1,6 @@
 import { initializeApp } from 'firebase/app'
 import { getFirestore, collection } from 'firebase/firestore'
-import config from "./config"
+import { config } from "./config"
 
 export const firebaseApp = initializeApp(config)
 

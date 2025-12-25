@@ -15,11 +15,11 @@ import Question from "./components/Question.vue"
 import Result from "./components/Result.vue"
 
 
-const result = useQuizzStore();
+const stateStore = useQuizzStore();
 
 const answerQuestion = (answer: Array<Number> | Number) => {
-     if (!result.finished)
-          result.answerQuestion(answer)
+     if (!stateStore.finished)
+          stateStore.answerQuestion(answer)
        
 }
 
